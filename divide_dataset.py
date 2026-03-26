@@ -1,9 +1,12 @@
 import math
 import random
+import os 
 from collections import defaultdict
-
-file_path = "FIX_HIT_cilin_utf8CT_zhconv (1).txt"
-
+current_dir = os.path.dirname(os.path.abspath(__file__))
+source_dir = os.path.join(current_dir, "Source")
+file_path = os.path.join(source_dir, "FIX_HIT_cilin_utf8_no_empty_poly_#.txt")
+output_folder = os.path.join(current_dir, "output")
+output_dir = output_folder  # 可以修改為你想要的輸出資料夾路徑
 # 步驟 1: 讀取並將資料依據 (分類字母, 詞數) 進行分組
 lines_by_group = defaultdict(list)
 total_available_pairs = 0
@@ -134,7 +137,7 @@ def save_to_file(filename, data_list):
         for line in data_list:
             f.write(line + "\n")
 
-save_to_file("dataset_valid.txt", valid_data)
-save_to_file("dataset_test.txt", test_data)
-save_to_file("dataset_train.txt", train_data)
+save_to_file(os.path.join(output_dir, "dataset_valid.txt"), valid_data)
+save_to_file(os.path.join(output_dir, "dataset_test.txt"), test_data)
+save_to_file(os.path.join(output_dir, "dataset_train.txt"), train_data)
 print("檔案切分匯出完成！")
