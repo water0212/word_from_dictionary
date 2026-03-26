@@ -35,15 +35,54 @@ with open(file_path, "r", encoding="utf-8") as f:
             lines_by_group[(first_letter, word_count)].append((line_idx, original_line))
             total_available_pairs += math.comb(word_count, 2)
 
+
+def check_exception_allocation(cat, word_count):
+    """
+    處理特定類別與詞數的例外分配規則。
+    回傳值：
+        - 若為例外情況，回傳指定的抽取行數 (整數)
+        - 若非例外情況，回傳 None
+    """
+    # 例外處理：當分類為 L 且詞數為 3 時，強制抽取 2 行 (供 Valid 和 Test 各 2 行)
+    if cat == 'L' and word_count == 3:
+        return 2
+        
+    # 未來若有其他例外，可在此繼續新增 elif ...
+    
+    return None
+
 # 步驟 2: 計算 13000 組的完美抽樣配額 (此段邏輯不變)
 target_total_pairs = 13000
 ratio = target_total_pairs / total_available_pairs
 
+# --- 🌟 新增：先盤點並扣除例外情況的配額 ---
+exception_allocated_pairs = 0
+exception_total_available_pairs = 0
+
+for (cat, n), lines in lines_by_group.items():
+    exc_alloc = check_exception_allocation(cat, n)
+    if exc_alloc is not None:
+        pairs_per_row = math.comb(n, 2)
+        exception_allocated_pairs += exc_alloc * pairs_per_row
+        exception_total_available_pairs += len(lines) * pairs_per_row
+
+# 重新計算給「正常資料」的抽樣比例
+normal_target_pairs = target_total_pairs - exception_allocated_pairs
+normal_available_pairs = total_available_pairs - exception_total_available_pairs
+ratio = normal_target_pairs / normal_available_pairs if normal_available_pairs > 0 else 0
+
 allocation = {}
-current_pairs = 0
+current_pairs = exception_allocated_pairs  # 起始配對數先算入例外群組
 fractional_info = []
 
 for (cat, n), lines in lines_by_group.items():
+    # 🌟 檢查是否為例外群組
+    exc_alloc = check_exception_allocation(cat, n)
+    if exc_alloc is not None:
+        allocation[(cat, n)] = exc_alloc
+        continue  # 例外群組已分配完畢，直接跳過後續常規計算
+        
+    # 以下為原本的常規分配邏輯
     count = len(lines)
     max_alloc_possible = count // 2
     
@@ -83,7 +122,7 @@ while current_pairs < target_total_pairs and attempts < 10000:
     attempts += 1
 
 # 步驟 3: 隨機抽樣並切分 8:1:1
-random.seed(42)
+#random.seed(42)
 
 # 先用 tuples 暫存 (行號, 內容)
 train_data_tuples = []
@@ -141,3 +180,5 @@ save_to_file(os.path.join(output_dir, "dataset_valid.txt"), valid_data)
 save_to_file(os.path.join(output_dir, "dataset_test.txt"), test_data)
 save_to_file(os.path.join(output_dir, "dataset_train.txt"), train_data)
 print("檔案切分匯出完成！")
+
+
