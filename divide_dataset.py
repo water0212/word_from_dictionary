@@ -5,7 +5,7 @@ from collections import defaultdict
 current_dir = os.path.dirname(os.path.abspath(__file__))
 source_dir = os.path.join(current_dir, "Source")
 file_path = os.path.join(source_dir, "FIX_HIT_cilin_utf8_no_empty_poly_#.txt")
-output_folder = os.path.join(current_dir, "output")
+output_folder = os.path.join(current_dir, "divide_dataset_output")
 output_dir = output_folder  # 可以修改為你想要的輸出資料夾路徑
 # 步驟 1: 讀取並將資料依據 (分類字母, 詞數) 進行分組
 lines_by_group = defaultdict(list)

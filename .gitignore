@@ -17,7 +17,9 @@ env/
 
 # --- 專案產出的檔案 (Output) ---
 # 你不希望每次跑程式產生的 Excel 都被當作程式碼變更
-output/
+divide_dataset_output/
+pairs_output/
+TEST_DATA/
 # --- 作業系統產生的雜檔 ---
 .DS_Store
 Thumbs.db
