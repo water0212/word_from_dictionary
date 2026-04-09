@@ -26,16 +26,19 @@ full_dict_file = os.path.join(current_dir,"Source", 'FIX_HIT_cilin_utf8_no_empty
 def get_combined_split(s1, s2):
     """
     判斷兩個詞組合後的所屬資料集
-    優先度: Valid(3) > Test(2) > Train(1) > None(0)
+    優先度: Test(3) > Valid(2) > Train(1) > None(0)
     若兩者皆小於等於 1 (例如 Train + None, 或 None + None)，則歸入 Train
     """
-    priority = {'Valid': 3, 'Test': 2, 'Train': 1, 'None': 0}
+    # 1. 將 Test 的權重改為 3，Valid 改為 2
+    priority = {'Test': 3, 'Valid': 2, 'Train': 1, 'None': 0}
+    
     p1 = priority.get(s1, 0)
     p2 = priority.get(s2, 0)
     max_p = max(p1, p2)
     
-    if max_p == 3: return 'Valid'
-    if max_p == 2: return 'Test'
+    # 2. 根據新的權重，修改回傳的邏輯
+    if max_p == 3: return 'Test'   # 現在 3 分代表 Test
+    if max_p == 2: return 'Valid'  # 現在 2 分代表 Valid
     return 'Train'
 
 def main():

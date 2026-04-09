@@ -19,7 +19,13 @@ env/
 # 你不希望每次跑程式產生的 Excel 都被當作程式碼變更
 
 TEST_DATA/
-TRAIN/
+smart_cross_output/test.json
+smart_cross_output/train.json
+smart_cross_output/valid.json
+pairs_output/model_datasets/test_data.jsonl
+pairs_output/model_datasets/train_data.jsonl
+pairs_output/model_datasets/valid_data.jsonl
+TRAIN/cc.zh.300.bin
 
 # --- 作業系統產生的雜檔 ---
 .DS_Store
