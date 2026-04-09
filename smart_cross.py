@@ -14,9 +14,9 @@ VALID_INPUT_PATH = os.path.join(current_dir, "divide_dataset_output", "dataset_v
 TEST_INPUT_PATH  = os.path.join(current_dir, "divide_dataset_output", "dataset_test.txt")
 
 # 輸出檔案的相對路徑
-TRAIN_OUTPUT_PATH = os.path.join(current_dir, "smart_cross_output", "train.jsonl")
-VALID_OUTPUT_PATH = os.path.join(current_dir, "smart_cross_output", "valid.jsonl")
-TEST_OUTPUT_PATH  = os.path.join(current_dir, "smart_cross_output", "test.jsonl")
+TRAIN_OUTPUT_PATH = os.path.join(current_dir, "smart_cross_output", "train.json")
+VALID_OUTPUT_PATH = os.path.join(current_dir, "smart_cross_output", "valid.json")
+TEST_OUTPUT_PATH  = os.path.join(current_dir, "smart_cross_output", "test.json")
 # =================================
 
 # 檔案路徑設定
